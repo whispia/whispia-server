@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: whispia-chat
+
+server:
+  port: 9000
