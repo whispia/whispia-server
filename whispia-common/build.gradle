@@ -1,9 +1,15 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
 group = 'com.whispia.common'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
+
+def springBootVersion = '3.5.4'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -14,6 +20,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    testFixturesImplementation ("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
 kotlin {

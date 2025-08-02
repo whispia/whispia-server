@@ -1,5 +1,5 @@
 rootProject.name = "whispia-server"
 
-include ':whispia-api'
-include ':whispia-chat'
-include ':whispia-common'
+include 'whispia-api'
+include 'whispia-chat'
+include 'whispia-common'
