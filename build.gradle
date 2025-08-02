@@ -1,0 +1,64 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.9.25'
+        springBootVersion = '3.5.4'
+        depsManagement = '1.1.7'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${depsManagement}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'org.jetbrains.kotlin.plugin.spring'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.whispia'
+    version = '0.0.1-SNAPSHOT'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    kotlin {
+        compilerOptions {
+            freeCompilerArgs.addAll '-Xjsr305=strict'
+        }
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+    dependencies {
+        implementation 'org.jetbrains.kotlin:kotlin-reflect'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+        implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+}
+
+project(':whispia-api') {
+    dependencies {
+        implementation project(':whispia-common')
+        testImplementation(testFixtures(project(":whispia-common")))
+    }
+}
