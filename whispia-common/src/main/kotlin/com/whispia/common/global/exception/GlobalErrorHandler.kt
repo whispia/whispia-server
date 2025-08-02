@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
+private const val COMMA = ", "
+
 @RestControllerAdvice
 class GlobalErrorHandler {
 
@@ -56,7 +58,7 @@ class GlobalErrorHandler {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationException(e: MethodArgumentNotValidException): ResponseEntity<ResponseData<Nothing>> {
         val fieldErrors = e.bindingResult.fieldErrors.map { "${it.field}: ${it.defaultMessage}" }
-        log.error("요청 데이터 검증 실패: {}", fieldErrors.joinToString(", "))
+        log.error("요청 데이터 검증 실패: {}", fieldErrors.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData<Nothing>(
@@ -70,7 +72,7 @@ class GlobalErrorHandler {
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<ResponseData<Nothing>> {
         val violations = e.constraintViolations.map { "${it.propertyPath}: ${it.message}" }
-        log.error("제약 조건 위반: {}", violations.joinToString(", "))
+        log.error("제약 조건 위반: {}", violations.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData<Nothing>(
