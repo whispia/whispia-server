@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: jhyoo
+      contexts: local
+      changes:
+        - createTable:
+            tableName: tests
+            columns:
+              - column:
+                  name: idx
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: TEXT
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: tests
+            columnNames: email
+            constraintName: uq_tests_email
