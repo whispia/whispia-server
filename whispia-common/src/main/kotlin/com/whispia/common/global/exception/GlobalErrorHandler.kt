@@ -42,7 +42,7 @@ class GlobalErrorHandler {
 
     @ExceptionHandler(BusinessException::class)
     fun handleBusinessException(e: BusinessException): ResponseEntity<ResponseData<Nothing>> {
-        log.error("비즈니스 로직 중 에러() 발생: {}", e.message)
+        log.error("비즈니스 로직 중 에러 발생: {}", e.message)
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData<Nothing>(
