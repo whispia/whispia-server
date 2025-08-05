@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: jhyoo
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: idx
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: '사용자 idx'
+              - column:
+                  name: key
+                  type: TEXT
+                  constraints:
+                    nullable: false
+                  remarks: '사용자 고유 키'
+              - column:
+                  name: status
+                  type: TEXT
+                  constraints:
+                    nullable: false
+                  remarks: '사용자의 status'
+              - column:
+                  name: email
+                  type: TEXT
+                  constraints:
+                    nullable: false
+                  remarks: '사용자의 이메일'
+              - column:
+                  name: password
+                  type: TEXT
+                  constraints:
+                    nullable: false
+                  remarks: '사용자의 비밀번호 해시'
+              - column:
+                  name: nickname
+                  type: TEXT
+                  constraints:
+                    nullable: false
+                  remarks: '사용자의 닉네임'
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                      nullable: false
+                      defaultValueComputed: CURRENT_TIMESTAMP
+                  remarks: '데이터 생성일자'
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  remarks: '데이터 수정일자'
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: email
+            constraintName: uidx_users_email
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: key
+            constraintName: uidx_users_key
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: nickname
+            constraintName: uidx_users_nickname
