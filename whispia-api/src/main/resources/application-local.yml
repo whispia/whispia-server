@@ -19,5 +19,4 @@ spring:
 
   liquibase:
     enabled: true
-    change-log: classpath:liquibase/changelog/db.changelog-master.yaml
     contexts: local
