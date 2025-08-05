@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: whispia-common
+
+  liquibase:
+    change-log: classpath:liquibase/db.changelog-master.yaml
