@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Seungwon-Choi
+      changes:
+        - createTable:
+            tableName: chat_rooms
+            columns:
+              - column:
+                  name: idx
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: '채팅방 idx'
+              - column:
+                  name: worry_idx
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                  remarks: '고민 idx'
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+                  remarks: '데이터 생성일자'
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  remarks: '데이터 수정일자'
+        - addForeignKeyConstraint:
+            baseTableName: chat_rooms
+            baseColumnNames: worry_idx
+            referencedTableName: worries
+            referencedColumnNames: idx
+            constraintName: fk_chat_rooms_worry
+            onDelete: CASCADE
