@@ -36,7 +36,7 @@ databaseChangeLog:
                   type: TEXT
                   constraints:
                     nullable: false
-                  remarks: '고민의 카테고리'
+                  remarks: '채팅메시지 상태'
               - column:
                   name: created_at
                   type: TIMESTAMP
