@@ -40,9 +40,9 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
-                    defaultValueComputed: CURRENT_TIMESTAMP
                   remarks: '데이터 생성일자'
               - column:
                   name: updated_at
