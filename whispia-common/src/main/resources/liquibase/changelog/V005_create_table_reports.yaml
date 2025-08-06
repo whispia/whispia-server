@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: Seungwon-Choi
+      changes:
+        - createTable:
+            tableName: reports
+            columns:
+              - column:
+                  name: idx
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: '신고 idx'
+              - column:
+                  name: user_idx
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                  remarks: '사용자 idx'
+              - column:
+                  name: target_idx
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                  remarks: '대상 idx'
+              - column:
+                  name: type
+                  type: TEXT
+                  constraints:
+                    nullable: false
+                  remarks: '신고의 타입'
+              - column:
+                  name: reason
+                  type: TEXT
+                  constraints:
+                    nullable: false
+                  remarks: '신고의 사유'
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+                    defaultValueComputed: CURRENT_TIMESTAMP
+                  remarks: '데이터 생성일자'
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  remarks: '데이터 수정일자'
+        - addForeignKeyConstraint:
+            baseTableName: reports
+            baseColumnNames: user_idx
+            referencedTableName: users
+            referencedColumnNames: idx
+            constraintName: fk_reports_user
+            onDelete: CASCADE
