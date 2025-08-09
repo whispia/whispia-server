@@ -54,10 +54,3 @@ databaseChangeLog:
                   name: updated_at
                   type: TIMESTAMP
                   remarks: '데이터 수정일자'
-        - addForeignKeyConstraint:
-            baseTableName: worries
-            baseColumnNames: user_idx
-            referencedTableName: users
-            referencedColumnNames: idx
-            constraintName: fk_worries_user
-            onDelete: CASCADE
