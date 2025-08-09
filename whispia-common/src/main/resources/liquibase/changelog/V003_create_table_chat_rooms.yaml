@@ -30,10 +30,3 @@ databaseChangeLog:
                   name: updated_at
                   type: TIMESTAMP
                   remarks: '데이터 수정일자'
-        - addForeignKeyConstraint:
-            baseTableName: chat_rooms
-            baseColumnNames: worry_idx
-            referencedTableName: worries
-            referencedColumnNames: idx
-            constraintName: fk_chat_rooms_worry
-            onDelete: CASCADE
