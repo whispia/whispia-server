@@ -12,6 +12,7 @@ import jakarta.persistence.*
 class Report (
 
     val targetId: Long,
+    @Enumerated(EnumType.STRING)
     val type: ReportType,
     val reason: String,
     @ManyToOne(fetch = FetchType.LAZY)
