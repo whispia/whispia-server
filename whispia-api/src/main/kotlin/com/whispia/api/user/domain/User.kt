@@ -11,9 +11,6 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.util.UUID
 
-/**
- * @author Seungwon-Choi
- */
 @Entity
 @Table(name = "users")
 class User (

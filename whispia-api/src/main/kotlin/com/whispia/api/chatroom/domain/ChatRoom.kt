@@ -12,9 +12,6 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 
-/**
- * @author Seungwon-Choi
- */
 @Entity
 @Table(name = "chat_rooms")
 class ChatRoom (

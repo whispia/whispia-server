@@ -14,9 +14,6 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
-/**
- * @author Seungwon-Choi
- */
 @Entity
 @Table(name = "reports")
 class Report (
