@@ -5,6 +5,8 @@ repositories {
     mavenCentral()
 }
 
+def mockkVersion = '1.13.8'
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
@@ -13,6 +15,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+    testImplementation "io.mockk:mockk:${mockkVersion}"
+    // Testcontainers
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
     runtimeOnly 'org.postgresql:postgresql'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 

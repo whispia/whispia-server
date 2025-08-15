@@ -5,6 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import jakarta.validation.ConstraintViolation
 import jakarta.validation.ConstraintViolationException
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNull
 import org.springframework.http.HttpStatus
@@ -13,6 +14,7 @@ import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import kotlin.test.assertEquals
 
+@DisplayName("전역 예외 헨들러 테스트")
 class GlobalErrorHandlerTest {
 
     private val globalErrorHandler = GlobalErrorHandler()
