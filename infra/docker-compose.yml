@@ -17,5 +17,58 @@ services:
       timeout: 1s
       retries: 5
 
+  sonarqube-postgres:
+    container_name: whispia-sonarqube-postgresql
+    environment:
+      POSTGRES_USER: sonarqube
+      POSTGRES_PASSWORD: sonarqube
+      POSTGRES_DB: sonarqube
+    image: postgres:16
+    ports:
+      - "5434:5432"
+    volumes:
+      - sonar-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U sonarqube -d sonarqube" ]
+      interval: 30s
+      timeout: 1s
+      retries: 5
+
+  # ./gradlew clean test jacocoTestReport sonar -Dsonar.token=your_token_here
+  sonarqube:
+    container_name: whispia-sonarqube
+    image: sonarqube:25.8.0.112029-community
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: true
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube-postgres:5432/sonarqube
+      SONAR_JDBC_USERNAME: sonarqube
+      SONAR_JDBC_PASSWORD: sonarqube
+    volumes:
+      - sonar-data:/opt/sonarqube/data
+      - sonar-extensions:/opt/sonarqube/extensions
+      - sonar-logs:/opt/sonarqube/logs
+    depends_on:
+      sonarqube-postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000/api/system/status | grep -q UP"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 3G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+
 volumes:
   pg-data:
+  sonar-pg-data:
+  sonar-data:
+  sonar-extensions:
+  sonar-logs:
