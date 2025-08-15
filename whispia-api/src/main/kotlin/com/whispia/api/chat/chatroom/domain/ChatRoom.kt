@@ -1,4 +1,4 @@
-package com.whispia.api.chatroom.domain
+package com.whispia.api.chat.chatroom.domain
 
 import com.whispia.api.worry.domain.Worry
 import com.whispia.common.global.domain.BaseEntity
@@ -17,14 +17,14 @@ import jakarta.persistence.Table
 class ChatRoom (
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worry_idx")
+    @JoinColumn(name = "worry_id")
     val worry: Worry
 
 ) : BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idx")
+    @Column(name = "id")
     var id: Long? = null
         private set
 }
