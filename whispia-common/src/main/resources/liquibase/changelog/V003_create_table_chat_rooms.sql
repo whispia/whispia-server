@@ -2,7 +2,7 @@
 
 -- changeset Seungwon-Choi:3 runInTransaction:false
 CREATE TABLE IF NOT EXISTS chat_rooms (
-    id         BIGSERIAL PRIMARY KEY    NOT NULL,
+    id          BIGSERIAL PRIMARY KEY    NOT NULL,
     worry_id    BIGINT                   NOT NULL,
     created_at  TIMESTAMP DEFAULT NOW()  NOT NULL,
     updated_at  TIMESTAMP
