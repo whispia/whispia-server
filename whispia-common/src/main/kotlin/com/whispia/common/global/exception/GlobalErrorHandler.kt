@@ -21,9 +21,10 @@ class GlobalErrorHandler {
         log.error("예상하지 못한 오류가 발생했습니다.", e)
 
         val errorCode = ErrorCode.INTERNAL_SERVER_ERROR
-        val responseData = ResponseData<Nothing>(
+        val responseData = ResponseData.of(
             httpStatus = errorCode.httpStatus.value(),
             errorCode = errorCode,
+            data = null
         )
 
         return ResponseEntity(responseData, errorCode.httpStatus)
@@ -34,9 +35,10 @@ class GlobalErrorHandler {
         log.error("파라미터 오류: {}", e.message)
 
         val errorCode = ErrorCode.INVALID_PARAMETER
-        val responseData = ResponseData<Nothing>(
+        val responseData = ResponseData.of(
             httpStatus = errorCode.httpStatus.value(),
             errorCode = errorCode,
+            data = null
         )
 
         return ResponseEntity(responseData, errorCode.httpStatus)
@@ -47,9 +49,10 @@ class GlobalErrorHandler {
         log.error("비즈니스 로직 중 에러 발생: {}", e.message)
 
         val errorCode = ErrorCode.INVALID_PARAMETER
-        val responseData = ResponseData<Nothing>(
+        val responseData = ResponseData.of(
             httpStatus = errorCode.httpStatus.value(),
             errorCode = errorCode,
+            data = null
         )
 
         return ResponseEntity(responseData, errorCode.httpStatus)
@@ -61,9 +64,10 @@ class GlobalErrorHandler {
         log.error("요청 데이터 검증 실패: {}", fieldErrors.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
-        val responseData = ResponseData<Nothing>(
+        val responseData = ResponseData.of(
             httpStatus = errorCode.httpStatus.value(),
             errorCode = errorCode,
+            data = null
         )
 
         return ResponseEntity(responseData, errorCode.httpStatus)
@@ -75,9 +79,10 @@ class GlobalErrorHandler {
         log.error("제약 조건 위반: {}", violations.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
-        val responseData = ResponseData<Nothing>(
+        val responseData = ResponseData.of(
             httpStatus = errorCode.httpStatus.value(),
             errorCode = errorCode,
+            data = null
         )
 
         return ResponseEntity(responseData, errorCode.httpStatus)
