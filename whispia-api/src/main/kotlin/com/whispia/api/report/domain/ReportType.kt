@@ -2,5 +2,6 @@ package com.whispia.api.report.domain
 
 enum class ReportType {
 
-    TEMP
+    WORRY,  // 걱정 신고
+    CHAT    // 채팅 신고
 }
