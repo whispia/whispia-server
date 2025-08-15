@@ -3,7 +3,7 @@
 -- changeset jhyoo:1 runInTransaction:false
 CREATE TABLE IF NOT EXISTS users (
     id          BIGSERIAL PRIMARY KEY    NOT NULL,
-    key         TEXT                     NOT NULL,
+    key         UUID                     NOT NULL,
     status      TEXT                     NOT NULL,
     email       TEXT                     NOT NULL,
     password    TEXT                     NOT NULL,
