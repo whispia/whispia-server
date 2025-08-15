@@ -2,7 +2,7 @@
 
 -- changeset jhyoo:1 runInTransaction:false
 CREATE TABLE IF NOT EXISTS users (
-    idx         BIGSERIAL PRIMARY KEY    NOT NULL,
+    id          BIGSERIAL PRIMARY KEY    NOT NULL,
     key         TEXT                     NOT NULL,
     status      TEXT                     NOT NULL,
     email       TEXT                     NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at  TIMESTAMP
 );
 
-COMMENT ON COLUMN users.idx IS '사용자 idx';
+COMMENT ON COLUMN users.id IS '사용자 id';
 COMMENT ON COLUMN users.key IS '사용자 고유 키';
 COMMENT ON COLUMN users.status IS '사용자의 status';
 COMMENT ON COLUMN users.email IS '사용자의 이메일';
