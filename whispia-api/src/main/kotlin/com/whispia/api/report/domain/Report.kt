@@ -24,7 +24,7 @@ class Report(
 
     // 타입에 따라 타겟은 worry_id, chat_id
     @Column(name = "target_id", nullable = false)
-    var targetId: Long,
+    val targetId: Long,
 
     @Column(name = "reason", nullable = false)
     val reason: String,
