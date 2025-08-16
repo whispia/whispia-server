@@ -16,23 +16,31 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "worries")
-class Worry (
+class Worry(
 
+    @Column(nullable = false)
     var title: String,
+
+    @Column(nullable = false)
     var content: String,
+
+    @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
     var category: WorryCategory,
+
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     var status: WorryStatus,
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_idx")
+    @JoinColumn(name = "user_id")
     val user: User
 
 ) : BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idx")
+    @Column(name = "id")
     var id: Long? = null
         private set
 }

@@ -14,6 +14,7 @@ buildscript {
         classpath("io.spring.gradle:dependency-management-plugin:${depsManagement}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarqubeVersion}")
     }
 }
@@ -25,6 +26,8 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'org.jetbrains.kotlin.jvm'
     apply plugin: 'org.jetbrains.kotlin.plugin.spring'
+    apply plugin: 'org.jetbrains.kotlin.plugin.jpa'
+    apply plugin: 'org.jetbrains.kotlin.plugin.noarg'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'jacoco'
@@ -63,6 +66,19 @@ subprojects {
     test {
         useJUnitPlatform()
         finalizedBy jacocoTestReport
+
+        // 테스트 시스템 속성 추가
+        systemProperty 'spring.profiles.active', 'test'
+        systemProperty 'spring.test.context.cache.maxSize', '1'
+
+        // JVM 메모리 설정
+        jvmArgs '-Xmx2g', '-XX:MaxMetaspaceSize=512m'
+
+        // 테스트 격리를 위한 설정
+        forkEvery = 1
+
+        // 테스트 병렬 실행 비활성
+        maxParallelForks = 1
     }
 
     tasks.named('test') {

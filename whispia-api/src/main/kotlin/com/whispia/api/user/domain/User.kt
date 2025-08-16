@@ -13,20 +13,29 @@ import java.util.UUID
 
 @Entity
 @Table(name = "users")
-class User (
+class User(
 
-    val uuid: UUID,
+    @Column(name = "key", nullable = false, unique = true)
+    var key: UUID,
+
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     var status: UserStatus,
+
+    @Column(name = "email", nullable = false, unique = true)
     val email: String,
+
+    @Column(name = "password", nullable = false)
     var password: String,
+
+    @Column(name = "nickname", nullable = false, unique = true)
     var nickname: String
 
 ) : BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idx")
+    @Column(name = "id")
     var id: Long? = null
         private set
 }
