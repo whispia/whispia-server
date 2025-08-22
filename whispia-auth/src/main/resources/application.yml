@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: whispia-auth
+
+server:
+  port: 30405

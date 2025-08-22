@@ -126,5 +126,7 @@ project(':whispia-api') {
     dependencies {
         implementation project(':whispia-common')
         testImplementation(testFixtures(project(":whispia-common")))
+
+        implementation project(':whispia-auth')
     }
 }
