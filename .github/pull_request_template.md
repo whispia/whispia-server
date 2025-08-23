@@ -1,5 +1,5 @@
-## Issue number
-
+## Jira ticket number
+- 
 
 ## Check list
 - [ ] 테스트 통과 확인
