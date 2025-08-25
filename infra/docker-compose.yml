@@ -39,7 +39,7 @@ services:
     container_name: whispia-sonarqube
     image: sonarqube:25.8.0.112029-community
     ports:
-      - "9000:9000"
+      - "9001:9000"
     environment:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: true
       SONAR_JDBC_URL: jdbc:postgresql://sonarqube-postgres:5432/sonarqube
@@ -68,9 +68,48 @@ services:
           cpus: '1.0'
           memory: 2G
 
+  grafana:
+    image: grafana/grafana:12.1.1
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command: --config.file=/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:2.9.5
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./config/loki-config.yml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+
+  promtail:
+    image: grafana/promtail:2.9.5
+    container_name: promtail
+    volumes:
+      - ./logs:/app-logs
+      - ./config/promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    restart: unless-stopped
+
 volumes:
   pg-data:
   sonar-pg-data:
   sonar-data:
   sonar-extensions:
   sonar-logs:
+  grafana-data:
