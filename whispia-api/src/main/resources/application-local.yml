@@ -20,3 +20,13 @@ spring:
   liquibase:
     enabled: true
     contexts: local
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
+
+logging:
+  file:
+    name: infra/logs/api-server.log

@@ -1,0 +1,9 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
+
+logging:
+  file:
+    name: infra/logs/chat-server.log
