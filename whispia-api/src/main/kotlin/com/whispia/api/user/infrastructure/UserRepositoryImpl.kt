@@ -12,5 +12,5 @@ class UserRepositoryImpl(
 
     override fun findById(id: Long): User =
         userJpaRepository.findById(id)
-            .orElseThrow { BusinessException("User not found: $id") }
+            .orElseThrow { BusinessException("UserRepository.findById - 유저 조회 실패: $id") }
 }
