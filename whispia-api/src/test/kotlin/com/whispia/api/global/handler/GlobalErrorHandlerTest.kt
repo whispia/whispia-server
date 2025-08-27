@@ -1,6 +1,7 @@
-package com.whispia.common.global.exception
+package com.whispia.api.global.handler
 
 import com.whispia.common.global.dto.ErrorCode
+import com.whispia.common.global.exception.BusinessException
 import io.mockk.every
 import io.mockk.mockk
 import jakarta.validation.ConstraintViolation
