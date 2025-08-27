@@ -1,3 +1,7 @@
+plugins {
+    id 'org.jetbrains.kotlin.kapt'
+}
+
 group = 'com.whispia.api'
 version = '0.0.1-SNAPSHOT'
 
@@ -6,6 +10,7 @@ repositories {
 }
 
 def mockkVersion = '1.13.8'
+def querydslVersion = '5.0.0'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -25,6 +30,11 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    // querydsl
+    implementation("com.querydsl:querydsl-jpa:${querydslVersion}:jakarta")
+    kapt("com.querydsl:querydsl-apt:${querydslVersion}:jakarta")
+
+
     implementation(project(":whispia-common"))
 }
 
@@ -32,6 +42,10 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll '-Xjsr305=strict'
     }
+}
+
+kapt {
+    generateStubs = true
 }
 
 tasks.named('test') {
