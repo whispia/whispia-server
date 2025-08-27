@@ -94,7 +94,7 @@ class ChatRoomTest(
 
         // then
         assertThat(savedChatRoom.worry.user.id).isEqualTo(user.id)
-        assertThat(savedChatRoom.worry.status).isEqualTo(WorryStatus.TEMP)
+        assertThat(savedChatRoom.worry.status).isEqualTo(WorryStatus.ACTIVE)
     }
 
     private fun createAndSaveUser(): User {
@@ -113,7 +113,7 @@ class ChatRoomTest(
             title = "테스트 고민",
             content = "채팅방 테스트용 고민",
             category = WorryCategory.RELATIONSHIP,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
         return entityManager.persistAndFlush(worry)

@@ -54,7 +54,7 @@ class WorryTest(
             title = "테스트 고민",
             content = "고민 내용입니다",
             category = WorryCategory.RELATIONSHIP,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
 
@@ -67,7 +67,7 @@ class WorryTest(
         assertThat(savedWorry.title).isEqualTo("테스트 고민")
         assertThat(savedWorry.content).isEqualTo("고민 내용입니다")
         assertThat(savedWorry.category).isEqualTo(WorryCategory.RELATIONSHIP)
-        assertThat(savedWorry.status).isEqualTo(WorryStatus.TEMP)
+        assertThat(savedWorry.status).isEqualTo(WorryStatus.ACTIVE)
         assertThat(savedWorry.user.id).isEqualTo(user.id)
         assertThat(savedWorry.createdAt).isNotNull
         assertThat(savedWorry.updatedAt).isNotNull
@@ -81,18 +81,18 @@ class WorryTest(
             title = "상태 변경 테스트",
             content = "내용",
             category = WorryCategory.CAREER,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
         val savedWorry = entityManager.persistAndFlush(worry)
 
         // when
-        savedWorry.status = WorryStatus.TEMP
+        savedWorry.status = WorryStatus.INACTIVE
         entityManager.flush()
         entityManager.refresh(savedWorry)
 
         // then
-        assertThat(savedWorry.status).isEqualTo(WorryStatus.TEMP)
+        assertThat(savedWorry.status).isEqualTo(WorryStatus.INACTIVE)
     }
 
     @Test
@@ -103,7 +103,7 @@ class WorryTest(
             title = "원본 제목",
             content = "원본 내용",
             category = WorryCategory.STUDY,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
         val savedWorry = entityManager.persistAndFlush(worry)
@@ -129,7 +129,7 @@ class WorryTest(
             title = "연관관계 테스트",
             content = "내용",
             category = WorryCategory.HEALTH,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
 

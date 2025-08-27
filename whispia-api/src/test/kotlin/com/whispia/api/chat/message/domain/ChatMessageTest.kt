@@ -134,7 +134,7 @@ class ChatMessageTest(
             title = "테스트 고민",
             content = "테스트 내용",
             category = WorryCategory.RELATIONSHIP,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
         val savedWorry = entityManager.persistAndFlush(worry)
