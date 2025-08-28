@@ -1,8 +1,9 @@
-package com.whispia.common.global.exception
+package com.whispia.api.global.handler
 
 import com.whispia.common.global.config.logger
 import com.whispia.common.global.dto.ErrorCode
 import com.whispia.common.global.dto.ResponseData
+import com.whispia.common.global.exception.BusinessException
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException

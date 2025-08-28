@@ -1,5 +1,6 @@
 package com.whispia.api.chat.chatroom.domain
 
+import com.whispia.api.global.BaseTestContainer
 import com.whispia.api.user.domain.User
 import com.whispia.api.user.domain.UserStatus
 import com.whispia.api.worry.domain.Worry
@@ -10,44 +11,21 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.TestConstructor
 import org.springframework.transaction.annotation.Transactional
-import org.testcontainers.containers.PostgreSQLContainer
-import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.UUID
 
 @DataJpaTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@EnableJpaAuditing
 @Transactional
 @Testcontainers
 @ActiveProfiles("test")
 @DisplayName("ChatRoom JPA 테스트")
 class ChatRoomTest(
     private val entityManager: TestEntityManager
-) {
-
-    companion object {
-        @Container
-        @JvmStatic
-        val postgres = PostgreSQLContainer("postgres:16")
-            .withDatabaseName("testdb")
-            .withUsername("test")
-            .withPassword("test")
-
-        @DynamicPropertySource
-        @JvmStatic
-        fun configureProperties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", postgres::getJdbcUrl)
-            registry.add("spring.datasource.username", postgres::getUsername)
-            registry.add("spring.datasource.password", postgres::getPassword)
-        }
-    }
+) : BaseTestContainer() {
 
     @Test
     fun `ChatRoom을 저장하고 조회할 수 있다`() {
@@ -94,7 +72,7 @@ class ChatRoomTest(
 
         // then
         assertThat(savedChatRoom.worry.user.id).isEqualTo(user.id)
-        assertThat(savedChatRoom.worry.status).isEqualTo(WorryStatus.TEMP)
+        assertThat(savedChatRoom.worry.status).isEqualTo(WorryStatus.ACTIVE)
     }
 
     private fun createAndSaveUser(): User {
@@ -113,7 +91,7 @@ class ChatRoomTest(
             title = "테스트 고민",
             content = "채팅방 테스트용 고민",
             category = WorryCategory.RELATIONSHIP,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
         return entityManager.persistAndFlush(worry)

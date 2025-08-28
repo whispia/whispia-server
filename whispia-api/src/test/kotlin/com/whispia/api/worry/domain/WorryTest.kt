@@ -1,5 +1,6 @@
 package com.whispia.api.worry.domain
 
+import com.whispia.api.global.BaseTestContainer
 import com.whispia.api.user.domain.User
 import com.whispia.api.user.domain.UserStatus
 import org.assertj.core.api.Assertions.assertThat
@@ -7,44 +8,21 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.TestConstructor
 import org.springframework.transaction.annotation.Transactional
-import org.testcontainers.containers.PostgreSQLContainer
-import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.UUID
 
 @DataJpaTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@EnableJpaAuditing
 @Transactional
 @Testcontainers
 @ActiveProfiles("test")
 @DisplayName("Worry JPA 테스트")
 class WorryTest(
     private val entityManager: TestEntityManager
-) {
-
-    companion object {
-        @Container
-        @JvmStatic
-        val postgres = PostgreSQLContainer("postgres:16")
-            .withDatabaseName("testdb")
-            .withUsername("test")
-            .withPassword("test")
-
-        @DynamicPropertySource
-        @JvmStatic
-        fun configureProperties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", postgres::getJdbcUrl)
-            registry.add("spring.datasource.username", postgres::getUsername)
-            registry.add("spring.datasource.password", postgres::getPassword)
-        }
-    }
+) : BaseTestContainer() {
 
     @Test
     fun `Worry를 저장하고 조회할 수 있다`() {
@@ -54,7 +32,7 @@ class WorryTest(
             title = "테스트 고민",
             content = "고민 내용입니다",
             category = WorryCategory.RELATIONSHIP,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
 
@@ -67,7 +45,7 @@ class WorryTest(
         assertThat(savedWorry.title).isEqualTo("테스트 고민")
         assertThat(savedWorry.content).isEqualTo("고민 내용입니다")
         assertThat(savedWorry.category).isEqualTo(WorryCategory.RELATIONSHIP)
-        assertThat(savedWorry.status).isEqualTo(WorryStatus.TEMP)
+        assertThat(savedWorry.status).isEqualTo(WorryStatus.ACTIVE)
         assertThat(savedWorry.user.id).isEqualTo(user.id)
         assertThat(savedWorry.createdAt).isNotNull
         assertThat(savedWorry.updatedAt).isNotNull
@@ -81,18 +59,18 @@ class WorryTest(
             title = "상태 변경 테스트",
             content = "내용",
             category = WorryCategory.CAREER,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
         val savedWorry = entityManager.persistAndFlush(worry)
 
         // when
-        savedWorry.status = WorryStatus.TEMP
+        savedWorry.status = WorryStatus.INACTIVE
         entityManager.flush()
         entityManager.refresh(savedWorry)
 
         // then
-        assertThat(savedWorry.status).isEqualTo(WorryStatus.TEMP)
+        assertThat(savedWorry.status).isEqualTo(WorryStatus.INACTIVE)
     }
 
     @Test
@@ -103,7 +81,7 @@ class WorryTest(
             title = "원본 제목",
             content = "원본 내용",
             category = WorryCategory.STUDY,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
         val savedWorry = entityManager.persistAndFlush(worry)
@@ -129,7 +107,7 @@ class WorryTest(
             title = "연관관계 테스트",
             content = "내용",
             category = WorryCategory.HEALTH,
-            status = WorryStatus.TEMP,
+            status = WorryStatus.ACTIVE,
             user = user
         )
 

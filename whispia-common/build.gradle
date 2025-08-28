@@ -1,5 +1,6 @@
 plugins {
     id 'java-test-fixtures'
+    id 'org.jetbrains.kotlin.kapt'
 }
 
 group = 'com.whispia.common'
@@ -9,8 +10,13 @@ repositories {
     mavenCentral()
 }
 
+bootJar {
+    enabled = false
+}
+
 def springBootVersion = '3.5.4'
 def mockkVersion = '1.13.8'
+def querydslVersion = '5.0.0'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -24,6 +30,10 @@ dependencies {
     testImplementation "io.mockk:mockk:${mockkVersion}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    // querydsl
+    implementation("com.querydsl:querydsl-jpa:${querydslVersion}:jakarta")
+    kapt("com.querydsl:querydsl-apt:${querydslVersion}:jakarta")
+
     testFixturesImplementation ("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
@@ -31,6 +41,10 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll '-Xjsr305=strict'
     }
+}
+
+kapt {
+    generateStubs = true
 }
 
 tasks.named('test') {

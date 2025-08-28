@@ -1,6 +1,12 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 5000
+      idle-timeout: 300000
+      max-lifetime: 900000
+      minimum-idle: 1
+      maximum-pool-size: 5
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -12,3 +18,10 @@ spring:
 
   liquibase:
     enabled: false
+
+logging:
+  level:
+    com.zaxxer.hikari: ERROR
+    org.postgresql: ERROR
+    org.hibernate.SQL: ERROR
+    org.hibernate.type.descriptor.sql.BasicBinder: ERROR
