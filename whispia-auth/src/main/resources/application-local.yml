@@ -23,3 +23,8 @@ spring:
   liquibase:
     enabled: false
     contexts: local
+
+jwt:
+  secret: ${SECRET_KEY}
+  access-token-validity-in-seconds: ${ACCESS_TOKEN_TIME}
+  refresh-token-validity-in-seconds: ${REFRESH_TOKEN_TIME}
