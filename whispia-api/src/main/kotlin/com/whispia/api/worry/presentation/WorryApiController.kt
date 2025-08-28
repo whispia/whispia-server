@@ -4,6 +4,7 @@ import com.whispia.api.worry.application.WorrySaveService
 import com.whispia.api.worry.application.dto.WorrySaveRequest
 import com.whispia.common.global.config.logger
 import com.whispia.common.global.dto.ResponseData
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,7 +19,7 @@ class WorryApiController(
     private val log = logger()
 
     @PostMapping
-    fun create(@RequestBody request: WorrySaveRequest): ResponseData<Boolean> {
+    fun create(@Valid @RequestBody request: WorrySaveRequest): ResponseData<Boolean> {
         log.info("WorryApiController.create - 고민 등록 요청: $request")
         return ResponseData.of(
             httpStatus = 201,
