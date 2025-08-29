@@ -88,4 +88,18 @@ class GlobalErrorHandler {
 
         return ResponseEntity(responseData, errorCode.httpStatus)
     }
+
+    @ExceptionHandler(NoSuchElementException::class)
+    fun handleNoSuchElementException(e: NoSuchElementException): ResponseEntity<ResponseData<Nothing>> {
+        log.error("요청한 리소스를 찾을 수 없습니다 - {}", e.message)
+
+        val errorCode = ErrorCode.RESOURCE_NOT_FOUND
+        val responseData = ResponseData.of(
+            httpStatus = errorCode.httpStatus.value(),
+            errorCode = errorCode,
+            data = null
+        )
+
+        return ResponseEntity(responseData, errorCode.httpStatus)
+    }
 }
