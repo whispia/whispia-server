@@ -13,6 +13,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import java.io.Serializable
 
 @Entity
 @Table(name = "worries")
@@ -36,7 +37,7 @@ class Worry(
     @JoinColumn(name = "user_id")
     val user: User
 
-) : BaseEntity() {
+) : BaseEntity(), Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

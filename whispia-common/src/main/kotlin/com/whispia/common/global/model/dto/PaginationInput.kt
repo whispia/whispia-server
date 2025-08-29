@@ -1,6 +1,6 @@
 package com.whispia.common.global.model.dto
 
-open class PaginationInput(
+data class PaginationInput(
     val page: Long,
     val pageSize: Long
 ) {

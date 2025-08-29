@@ -21,6 +21,14 @@ spring:
     enabled: true
     contexts: local
 
+  data:
+    redis:
+      host: localhost
+      port: 6380
+
+  cache:
+    type: redis
+
 management:
   endpoints:
     web:
