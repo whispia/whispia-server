@@ -33,7 +33,7 @@ class GlobalErrorHandler {
 
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<ResponseData<Nothing>> {
-        log.error("파라미터 오류: {}", e.message)
+        log.error("파라미터 오류 - {}", e.message)
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData.of(
@@ -47,7 +47,7 @@ class GlobalErrorHandler {
 
     @ExceptionHandler(BusinessException::class)
     fun handleBusinessException(e: BusinessException): ResponseEntity<ResponseData<Nothing>> {
-        log.error("비즈니스 로직 중 에러 발생: {}", e.message)
+        log.error("비즈니스 로직 중 에러 발생 - {}", e.message)
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData.of(
@@ -62,7 +62,7 @@ class GlobalErrorHandler {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationException(e: MethodArgumentNotValidException): ResponseEntity<ResponseData<Nothing>> {
         val fieldErrors = e.bindingResult.fieldErrors.map { "${it.field}: ${it.defaultMessage}" }
-        log.error("요청 데이터 검증 실패: {}", fieldErrors.joinToString(COMMA))
+        log.error("요청 데이터 검증 실패 - {}", fieldErrors.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData.of(
@@ -77,7 +77,7 @@ class GlobalErrorHandler {
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<ResponseData<Nothing>> {
         val violations = e.constraintViolations.map { "${it.propertyPath}: ${it.message}" }
-        log.error("제약 조건 위반: {}", violations.joinToString(COMMA))
+        log.error("제약 조건 위반 - {}", violations.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData.of(
