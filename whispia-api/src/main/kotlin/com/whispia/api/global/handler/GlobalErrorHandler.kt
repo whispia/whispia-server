@@ -1,8 +1,8 @@
 package com.whispia.api.global.handler
 
 import com.whispia.common.global.config.logger
-import com.whispia.common.global.dto.ErrorCode
-import com.whispia.common.global.dto.ResponseData
+import com.whispia.common.global.model.ErrorCode
+import com.whispia.common.global.model.ResponseData
 import com.whispia.common.global.exception.BusinessException
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.ResponseEntity
@@ -33,7 +33,7 @@ class GlobalErrorHandler {
 
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<ResponseData<Nothing>> {
-        log.error("파라미터 오류: {}", e.message)
+        log.error("파라미터 오류 - {}", e.message)
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData.of(
@@ -47,7 +47,7 @@ class GlobalErrorHandler {
 
     @ExceptionHandler(BusinessException::class)
     fun handleBusinessException(e: BusinessException): ResponseEntity<ResponseData<Nothing>> {
-        log.error("비즈니스 로직 중 에러 발생: {}", e.message)
+        log.error("비즈니스 로직 중 에러 발생 - {}", e.message)
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData.of(
@@ -62,7 +62,7 @@ class GlobalErrorHandler {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationException(e: MethodArgumentNotValidException): ResponseEntity<ResponseData<Nothing>> {
         val fieldErrors = e.bindingResult.fieldErrors.map { "${it.field}: ${it.defaultMessage}" }
-        log.error("요청 데이터 검증 실패: {}", fieldErrors.joinToString(COMMA))
+        log.error("요청 데이터 검증 실패 - {}", fieldErrors.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
         val responseData = ResponseData.of(
@@ -77,9 +77,23 @@ class GlobalErrorHandler {
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<ResponseData<Nothing>> {
         val violations = e.constraintViolations.map { "${it.propertyPath}: ${it.message}" }
-        log.error("제약 조건 위반: {}", violations.joinToString(COMMA))
+        log.error("제약 조건 위반 - {}", violations.joinToString(COMMA))
 
         val errorCode = ErrorCode.INVALID_PARAMETER
+        val responseData = ResponseData.of(
+            httpStatus = errorCode.httpStatus.value(),
+            errorCode = errorCode,
+            data = null
+        )
+
+        return ResponseEntity(responseData, errorCode.httpStatus)
+    }
+
+    @ExceptionHandler(NoSuchElementException::class)
+    fun handleNoSuchElementException(e: NoSuchElementException): ResponseEntity<ResponseData<Nothing>> {
+        log.error("요청한 리소스를 찾을 수 없습니다 - {}", e.message)
+
+        val errorCode = ErrorCode.RESOURCE_NOT_FOUND
         val responseData = ResponseData.of(
             httpStatus = errorCode.httpStatus.value(),
             errorCode = errorCode,
