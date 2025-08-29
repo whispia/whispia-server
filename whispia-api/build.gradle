@@ -23,6 +23,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testImplementation "io.mockk:mockk:${mockkVersion}"
+
     // Testcontainers
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
@@ -34,6 +35,9 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:${querydslVersion}:jakarta")
     kapt("com.querydsl:querydsl-apt:${querydslVersion}:jakarta")
 
+    // redis cache
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
 
     implementation(project(":whispia-common"))
 }

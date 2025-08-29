@@ -17,6 +17,30 @@ services:
       timeout: 1s
       retries: 5
 
+  redis:
+    container_name: whispia-redis
+    image: redis:8.2.1-alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis-data:/data
+      - ./config/redis.conf:/etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
   sonarqube-postgres:
     container_name: whispia-sonarqube-postgresql
     environment:
@@ -113,3 +137,4 @@ volumes:
   sonar-extensions:
   sonar-logs:
   grafana-data:
+  redis-data:
