@@ -1,4 +1,4 @@
-package com.whispia.common.global.dto
+package com.whispia.common.global.model.dto
 
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.PositiveOrZero

@@ -1,4 +1,4 @@
-package com.whispia.common.global.dto
+package com.whispia.common.global.model
 
 import org.springframework.http.HttpStatus
 

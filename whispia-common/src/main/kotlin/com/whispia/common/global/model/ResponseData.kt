@@ -1,4 +1,4 @@
-package com.whispia.common.global.dto
+package com.whispia.common.global.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime
