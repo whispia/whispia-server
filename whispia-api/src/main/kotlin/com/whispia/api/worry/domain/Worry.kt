@@ -13,6 +13,8 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import java.io.Serializable
 
 @Entity
@@ -35,7 +37,15 @@ class Worry(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    val user: User
+    val user: User,
+
+    @Column(
+        name = "hashtags",
+        columnDefinition = "text[]",
+        nullable = false
+    )
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    var hashtags: List<String> = emptyList()
 
 ) : BaseEntity(), Serializable {
 

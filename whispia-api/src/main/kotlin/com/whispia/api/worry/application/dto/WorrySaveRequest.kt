@@ -3,10 +3,11 @@ package com.whispia.api.worry.application.dto
 import com.whispia.api.worry.domain.WorryCategory
 import com.whispia.api.worry.domain.WorryStatus
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 
 data class WorrySaveRequest(
-    @field:NotBlank(message = "사용자 ID는 필수입니다")
+    @field:NotNull(message = "사용자 ID는 필수입니다")
     val userId: Long,
 
     @field:NotBlank(message = "제목은 필수입니다")
@@ -21,7 +22,9 @@ data class WorrySaveRequest(
     val category: String,
 
     @field:NotBlank(message = "상태는 필수입니다")
-    val status: String
+    val status: String,
+
+    val hashtags: List<String>
 ) {
     fun toInput(): WorrySaveInput {
         return WorrySaveInput(
@@ -29,7 +32,8 @@ data class WorrySaveRequest(
             title = title,
             content = content,
             category = WorryCategory.valueOf(category),
-            status = WorryStatus.valueOf(status)
+            status = WorryStatus.valueOf(status),
+            hashtags = hashtags
         )
     }
 }
