@@ -11,7 +11,7 @@ repositories {
 
 def mockkVersion = '1.13.8'
 def querydslVersion = '5.0.0'
-def hybernateTypesVersion = '2.21.1'
+def hibernateTypesVersion = '2.21.1'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -22,7 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation "com.vladmihalcea:hibernate-types-60:${hybernateTypesVersion}"
+    implementation "com.vladmihalcea:hibernate-types-60:${hibernateTypesVersion}"
 
     // test
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
