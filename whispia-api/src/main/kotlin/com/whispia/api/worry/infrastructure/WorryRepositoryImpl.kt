@@ -50,6 +50,7 @@ class WorryRepositoryImpl(
     }
 
     override fun findById(worryId: Long): Worry {
-        return worryJpaRepository.findById(worryId).orElseThrow { NoSuchElementException("Worry not found with id: $worryId") }
+        return worryJpaRepository.findById(worryId)
+            .orElseThrow { NoSuchElementException("WorryRepository.findById - Worry not found with id: $worryId") }
     }
 }

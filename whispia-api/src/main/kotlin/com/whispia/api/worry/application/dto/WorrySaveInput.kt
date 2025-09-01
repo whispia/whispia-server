@@ -10,13 +10,15 @@ data class WorrySaveInput(
     val title: String,
     val content: String,
     val category: WorryCategory,
-    val status: WorryStatus
+    val status: WorryStatus,
+    val hashtags: List<String>
 ) {
     fun toEntity(user: User) = Worry(
         title = title,
         content = content,
         category = category,
         status = status,
-        user = user
+        user = user,
+        hashtags = hashtags
     )
 }

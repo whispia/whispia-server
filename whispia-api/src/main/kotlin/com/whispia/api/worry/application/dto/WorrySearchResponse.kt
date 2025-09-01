@@ -10,6 +10,7 @@ data class WorrySearchResponse (
     val content: String,
     val category: WorryCategory,
     val status: WorryStatus,
+    val hashtags: List<String> = emptyList(),
     val createdAt: String,
     val updatedAt: String
 ) {
@@ -27,6 +28,7 @@ data class WorrySearchResponse (
                 content = worry.content,
                 category = worry.category,
                 status = worry.status,
+                hashtags = worry.hashtags,
                 createdAt = worry.createdAt.toString(),
                 updatedAt = worry.updatedAt.toString()
             )
