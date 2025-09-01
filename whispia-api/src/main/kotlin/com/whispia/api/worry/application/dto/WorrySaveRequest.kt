@@ -24,6 +24,7 @@ data class WorrySaveRequest(
     @field:NotBlank(message = "상태는 필수입니다")
     val status: String,
 
+    @field:Size(max = 4, message = "해시태그는 최대 4개까지 입력 가능합니다")
     val hashtags: List<String>
 ) {
     fun toInput(): WorrySaveInput {
