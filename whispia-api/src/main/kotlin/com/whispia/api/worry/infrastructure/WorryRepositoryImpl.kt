@@ -25,6 +25,7 @@ class WorryRepositoryImpl(
 
     override fun search(input: WorrySearchInput): List<Worry> {
         return searchQuery(input)
+            .orderBy(QWorry.worry.id.desc())
             .offset((input.pagination.page))
             .limit(input.pagination.pageSize)
             .fetch()
